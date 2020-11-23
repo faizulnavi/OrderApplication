@@ -19,6 +19,7 @@ namespace OrderApplication.Domain.Entities
 
         public void CreateMembership(string membertype)
         {
+            try { 
             member.Add(
             new Membership
             {
@@ -28,16 +29,21 @@ namespace OrderApplication.Domain.Entities
                 IsActive = "Yes"
             }
             );
+            }
+            catch { }
         }
 
         // Upgrade membership
 
         public void UpdaradMembership(string membertype, int id)
         {
+            try { 
             foreach (var type in Updatemember.Where(w => w.MemberID == id))
             {
                 MembershipType = membertype;
             }
+            }
+            catch { }
         }
 
 

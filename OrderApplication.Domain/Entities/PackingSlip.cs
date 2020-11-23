@@ -30,6 +30,7 @@ namespace OrderApplication.Domain.Entities
        public void GeneratePackingSlip(Cart cart, ShippingDetails shippingDetails, string cat, string gift)
         {
             string orderID = "1s";//Rules.GenerateOrdertNumber();
+           
             string FreeGift = "";
             if (gift == "Yes")
             {
@@ -39,9 +40,10 @@ namespace OrderApplication.Domain.Entities
             {
                 FreeGift = "N/A";
             }
+            try { 
             packingSlips.Add(
-          new PackingSlip
-          {
+            new PackingSlip
+             {
               SlipID = 1,
               OrderNumber = orderID,
               Product_Name = cart.Lines.Select(s => s.Product.Product_Name).FirstOrDefault(),
@@ -53,45 +55,36 @@ namespace OrderApplication.Domain.Entities
               Country = shippingDetails.Country,
               pupose = "shipping",
               gift = FreeGift
-          }
-          );
-            if (cat == "Book") // Adding duplicate receipt for Book
-            {
-                packingSlips_DuplicateforLoyalti.Add(
-                    new PackingSlip
-                    {
-                        SlipID = 1,
-                        OrderNumber = orderID, // keep the same order number to make a duplicate copy
-                        Product_Name = cart.Lines.Select(s => s.Product.Product_Name).FirstOrDefault(),
-                        Quantity = cart.Lines.Select(s => s.Quantity).FirstOrDefault(),
-                        Address = shippingDetails.Line1 + shippingDetails.Line2 + shippingDetails,
-                        City = shippingDetails.City,
-                        State = shippingDetails.State,
-                        zip = shippingDetails.Zip,
-                        Country = shippingDetails.Country,
-                        pupose = "Layalti Deparment"
-                    }
-                    );
-
-                if (cat == "Book" || cat == "Physical")
+             }
+            );
+                if (cat == "Book") // Adding duplicate receipt for Book
                 {
-                    agentcom.Generate_AgentCommision(orderID);
+                    packingSlips_DuplicateforLoyalti.Add(
+                        new PackingSlip
+                        {
+                            SlipID = 1,
+                            OrderNumber = orderID, // keep the same order number to make a duplicate copy
+                        Product_Name = cart.Lines.Select(s => s.Product.Product_Name).FirstOrDefault(),
+                            Quantity = cart.Lines.Select(s => s.Quantity).FirstOrDefault(),
+                            Address = shippingDetails.Line1 + shippingDetails.Line2 + shippingDetails,
+                            City = shippingDetails.City,
+                            State = shippingDetails.State,
+                            zip = shippingDetails.Zip,
+                            Country = shippingDetails.Country,
+                            pupose = "Layalti Deparment"
+                        }
+                        );
+
+                    if (cat == "Book" || cat == "Physical")
+                    {
+                        agentcom.Generate_AgentCommision(orderID);
+                    }
                 }
+                
             }
+            catch { }
 
 
         }
-
-        //private List<AgentCommission> agent = new List<AgentCommission>();
-        //public void Generate_AgentCommision(string ordernum)
-        //{
-        //    agent.Add(
-        //    new AgentCommission
-        //    {
-        //        OrderNumber = ordernum,
-        //        Commission = 100
-        //    }
-        //    );
-        //}
     }
 }

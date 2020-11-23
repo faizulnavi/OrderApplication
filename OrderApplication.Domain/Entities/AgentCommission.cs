@@ -15,6 +15,7 @@ namespace OrderApplication.Domain.Entities
         public List<AgentCommission> agent = new List<AgentCommission>();
         public void Generate_AgentCommision(string ordernum)
         {
+            try { 
             agent.Add(
             new AgentCommission
             {
@@ -22,6 +23,8 @@ namespace OrderApplication.Domain.Entities
                 Commission = 100
             }
             );
+            }
+            catch { }
         }
     }
 }
