@@ -54,5 +54,15 @@ namespace OrderApplicationTest
             Assert.AreEqual("Loyalti Deparment", ActualValue);
         }
 
+        [TestMethod]
+        public void RunShouldAddAgentCommissionforValidItem()
+        {
+            var agentcom = new AgentCommission();
+            agentcom.Generate_AgentCommision("101");
+
+            int ActualValue = agentcom.agent[0].Commission;
+            Assert.AreEqual(100, ActualValue);
+        }
+
     }
 }
