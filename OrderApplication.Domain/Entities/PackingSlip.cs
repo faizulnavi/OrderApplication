@@ -87,7 +87,7 @@ namespace OrderApplication.Domain.Entities
                             State = shippingDetails.State,
                             zip = shippingDetails.Zip,
                             Country = shippingDetails.Country,
-                            pupose = "Layalti Deparment"
+                            pupose = "Loyalti Deparment"
                         }
                         );
 
