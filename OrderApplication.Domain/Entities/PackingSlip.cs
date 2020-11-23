@@ -27,9 +27,25 @@ namespace OrderApplication.Domain.Entities
         public List<PackingSlip> packingSlips = new List<PackingSlip>();
         public List<PackingSlip> packingSlips_DuplicateforLoyalti = new List<PackingSlip>();
         AgentCommission agentcom = new AgentCommission();
-       public void GeneratePackingSlip(Cart cart, ShippingDetails shippingDetails, string cat, string gift)
+
+        private static int _ordernumber = 0;
+        private static int _slipID = 0;
+        public static string GenerateOrdertNumber()
         {
-            string orderID = "1s";//Rules.GenerateOrdertNumber();
+            _ordernumber++;
+            return "Order-" + _ordernumber.ToString();
+        }
+
+        public static int GenerateSlipID()
+        {
+            _slipID++;
+            return _slipID;
+        }
+
+
+        public void GeneratePackingSlip(Cart cart, ShippingDetails shippingDetails, string cat, string gift)
+        {
+            string orderID = GenerateOrdertNumber();//Rules.GenerateOrdertNumber();
            
             string FreeGift = "";
             if (gift == "Yes")
@@ -44,7 +60,7 @@ namespace OrderApplication.Domain.Entities
             packingSlips.Add(
             new PackingSlip
              {
-              SlipID = 1,
+              SlipID = GenerateSlipID(),
               OrderNumber = orderID,
               Product_Name = cart.Lines.Select(s => s.Product.Product_Name).FirstOrDefault(),
               Quantity = cart.Lines.Select(s => s.Quantity).FirstOrDefault(),
@@ -62,9 +78,9 @@ namespace OrderApplication.Domain.Entities
                     packingSlips_DuplicateforLoyalti.Add(
                         new PackingSlip
                         {
-                            SlipID = 1,
+                            SlipID = GenerateSlipID(),
                             OrderNumber = orderID, // keep the same order number to make a duplicate copy
-                        Product_Name = cart.Lines.Select(s => s.Product.Product_Name).FirstOrDefault(),
+                            Product_Name = cart.Lines.Select(s => s.Product.Product_Name).FirstOrDefault(),
                             Quantity = cart.Lines.Select(s => s.Quantity).FirstOrDefault(),
                             Address = shippingDetails.Line1 + shippingDetails.Line2 + shippingDetails,
                             City = shippingDetails.City,
