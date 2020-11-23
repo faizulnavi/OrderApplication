@@ -1,4 +1,5 @@
-﻿using OrderApplication.Domain.Entities;
+﻿using OrderApplication.Domain.Abstract;
+using OrderApplication.Domain.Entities;
 using OrderApplication.WebUI.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,13 @@ namespace OrderApplication.WebUI.Controllers
         private IProductRepository repository;
         private IOrderProcessor orderProcessor;
         // GET: Cart
+
+        public CartController(IProductRepository repo, IOrderProcessor proc)
+        {
+            repository = repo;
+            orderProcessor = proc;
+        }
+
         public ViewResult Index(Cart cart, string returnUrl)
         {
             return View(
@@ -82,6 +90,28 @@ namespace OrderApplication.WebUI.Controllers
             {
                 return View(shippingDetails);
             }
+        }
+
+        public RedirectToRouteResult AddToCart(Cart cart, int Product_ID, string returnUrl)
+        {
+            Product product = repository.Products.FirstOrDefault(p => p.Product_ID == Product_ID);
+
+            if (product != null)
+            {
+                cart.AddItem(product, 1);
+            }
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        public RedirectToRouteResult RemoveFromCart(Cart cart, int productId, string returnUrl)
+        {
+            Product product = repository.Products.FirstOrDefault(p => p.Product_ID == productId);
+
+            if (product != null)
+            {
+                cart.RemoveLine(product);
+            }
+            return RedirectToAction("Index", new { returnUrl });
         }
     }
 }
