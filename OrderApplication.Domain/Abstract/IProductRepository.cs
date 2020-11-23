@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OrderApplication.Domain.Entities;
 
-namespace OrderProcessingApp.Domain.Abstract
+namespace OrderApplication.Domain.Abstract
 {
     public interface IProductRepository
     {

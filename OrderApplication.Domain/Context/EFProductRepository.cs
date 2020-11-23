@@ -1,7 +1,7 @@
 ﻿using OrderApplication.Domain.Abstract;
 using OrderApplication.Domain.Entities;
-using OrderProcessingApp.Domain.Abstract;
-using OrderProcessingApp.Domain.Context;
+using OrderApplication.Domain.Abstract;
+using OrderApplication.Domain.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;

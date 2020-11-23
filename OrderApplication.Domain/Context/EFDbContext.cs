@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using OrderApplication.Domain.Entities;
 
-namespace OrderProcessingApp.Domain.Context
+namespace OrderApplication.Domain.Context
 {
     public class EFDbContext : DbContext
     {
